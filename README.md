@@ -1,4 +1,6 @@
-# bauble (working name)
+# bauble
+
+**(bauble is working name) it might be called something else soon - chime in on [#1](https://github.com/whiteoctober/bauble/issues/1) if you have any ideas.** 
 
 Video stream object tracking in the browser.
 
