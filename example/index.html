@@ -1,0 +1,110 @@
+<html>
+<head>
+  <title>Bauble</title>
+  <style type="text/css">label{display:block;} body{font-family: sans-serif;}</style>
+</head>
+<body>
+
+  <div id="holder"></div>
+
+  <label>
+    <input type="checkbox" id="cal" checked="true"/>
+    Calibrate
+  </label>
+
+  <select id="action" style="display:none">
+    <option value="cross">&times;</option>
+    <option value="draw">Overlay points</option>
+    <option value="orientation">Video Orientation</option>
+  </select>
+
+
+  <script type="text/javascript" src="../src/bauble.js"></script>
+  <script type="text/javascript">
+
+    var bauble = new Bauble({worker:'../src/bauble-worker.js'}),
+        update_fn;
+
+    bauble.getUserMedia()
+        .attachTo('#holder')
+        .on('point', function(x,y){
+          if(update_fn) update_fn(x,y)
+        });
+
+    function clearOverlay(fill){
+      bauble.pctx.clearRect(0,0,bauble.persistantCanvas.width,bauble.persistantCanvas.height);
+
+      if(fill){
+        bauble.pctx.fillStyle = fill;
+        bauble.pctx.fillRect(0,0,bauble.persistantCanvas.width,bauble.persistantCanvas.height);        
+      }
+    }
+
+    cal.addEventListener('change', function(){
+      bauble.setCalibrating(this.checked);
+      action.style.display = this.checked ? 'none' : 'block';
+      clearOverlay();
+    }, false)
+
+    action.addEventListener('change', function(e){
+      setDrawFn(this.value);
+    }, false)
+
+    function setDrawFn(name){
+      bauble.pctx.lineWidth = 1;
+      switch (name){
+        case 'cross':
+          update_fn = function(x, y){
+            clearOverlay();
+
+            with(bauble.pctx){
+              strokeStyle = '#08f'
+              lineWidth = 10
+              beginPath();
+              moveTo(x - 20,y - 20);
+              lineTo(x + 20,y + 20);
+
+              moveTo(x - 20,y + 20);
+              lineTo(x + 20,y - 20);
+
+              stroke();
+            }
+          };
+          break;
+
+        case 'draw':
+          var last;
+          update_fn = function(x, y){
+            with(bauble.pctx){
+              strokeStyle = '#08f'
+              strokeRect(x-2,y-2,4,4);
+              if(last && last[0]){
+                beginPath();
+                moveTo(last[0], last[1]);
+                lineTo(x,y);
+                stroke();
+              }
+            }
+            last = [x,y];
+          }; 
+          clearOverlay('rgba(255,255,255,0.3)')
+          break;
+
+        case 'orientation':
+          update_fn = function(x, y){
+
+            var x = ((x / bauble.canvas.width) * 180) - 90;
+            var y = ((y / bauble.canvas.height) * 180) - 90;
+
+            bauble.canvas.style.webkitTransform = 'rotateY('+(x*-1)+'deg) rotateX('+y+'deg)';
+          };
+          clearOverlay();
+      }
+    }
+
+    // set to the initially selected function
+    setDrawFn(action.value)
+
+  </script>
+</body>
+</html>
