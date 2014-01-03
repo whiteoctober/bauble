@@ -14,12 +14,25 @@ Video stream object tracking in the browser.
 <script>
   var bauble = new Bauble({worker:'js/bauble-worker.js'})
   bauble.getUserMedia()
-      .attach('#target')
+      .attachTo('#target')
       .on('point', function(x,y){
         // do something awesome!!
       });
 
   // click #calibrate_button to mark as calibrated
-  calibrate_button.onclick = bauble.calibrated;
+  calibrate_button.onclick = function(){
+    bauble.setCalibrating(false);
+  }
 </script>
+```
+
+
+### canvas
+
+There is an offscreen canvas that is drawn over the top of every video frame, this can be handy for overlaying visuals on the video.
+
+```js
+.on('point', function(x,y){
+  bauble.pctx.fillRect(x-2,y-2,4,4);
+});
 ```

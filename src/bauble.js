@@ -259,9 +259,13 @@
     return this;
   }
 
-  Bauble.prototype.calibrated = function(){
-    this.thresholds = [minh, maxh, mins, maxs, minv, maxv];
-    this._process_action = 'recognise';
+  Bauble.prototype.setCalibrating = function(c){
+    if(c){
+      this._process_action = 'calibrate';
+    } else {
+      this.thresholds = [minh, maxh, mins, maxs, minv, maxv];
+      this._process_action = 'recognise'; 
+    }
     return this;
   }
 
