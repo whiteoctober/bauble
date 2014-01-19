@@ -19,13 +19,13 @@ perspective-origin: 0 -100px;
 
   <label>
     <input type="checkbox" id="cal" checked="true"/>
-    Calibrate
+    Calibrate <em></em>(hold the target object in the square, then un-check this to start)</em>
   </label>
 
   <select id="action" style="display:none">
-    <option value="cross">&times;</option>
+    <option value="cross">&times; marker</option>
     <option value="draw">Overlay points</option>
-    <option value="orientation">Video Orientation</option>
+    <option value="orientation">Video Orientation (webkit only)</option>
   </select>
 
 
@@ -80,6 +80,8 @@ perspective-origin: 0 -100px;
               stroke();
             }
           };
+          
+          bauble.canvas.style.webkitTransform = '';
           break;
 
         case 'draw':
@@ -98,6 +100,7 @@ perspective-origin: 0 -100px;
             last = [x,y];
           }; 
           clearOverlay('rgba(255,255,255,0.3)')
+          bauble.canvas.style.webkitTransform = '';
           break;
 
         case 'orientation':
