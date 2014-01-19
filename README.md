@@ -50,3 +50,7 @@ There is an offscreen canvas that is drawn over the top of every video frame, th
   bauble.pctx.fillRect(x-2,y-2,4,4);
 });
 ```
+
+## Examples
+
+There is a pretty basic example at [whiteoctober.github.io/bauble/example/](http://whiteoctober.github.io/bauble/example/).  More are on the way.
