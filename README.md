@@ -1,8 +1,22 @@
 # bauble
 
-**(bauble is working name) it might be called something else soon - chime in on [#1](https://github.com/whiteoctober/bauble/issues/1) if you have any ideas.** 
-
 Video stream object tracking in the browser.
+
+![recognising a lemon](http://benjaminbenben.com/bauble-1.jpg)
+
+## About
+
+This recognises objects from a getUserMedia video stream - we built it for a web-based pictionary game at our christmas party.
+
+The approach taken is:
+
+1. convert the image into HSV
+2. perform thresholding on the three channels
+3. find the average x/y coordinate of matching pixels
+
+This is quite a basic approach to object recognition,  if you want to try and recognise more complex objects you might want to take a look at [js-objectdetect](https://github.com/mtschirs/js-objectdetect), or skip the browser and go stright to [opencv.org](http://opencv.org/).  Also, if you have suggestions of how to make this more robust/efficient - please do log [an issue](https://github.com/whiteoctober/bauble/issues) or ping [benjaminbenben](https://twitter.com/benjaminbenben).
+
+Most of the processing is done in a web worker, so it shouldn't impact too much on other page interactions.  There is also an optimisation that only checks the region near the last observed point - which speeds things up quite a bit.
 
 ## Usage
 
