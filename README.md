@@ -53,4 +53,4 @@ There is an offscreen canvas that is drawn over the top of every video frame, th
 
 ## Examples
 
-There is a pretty basic example at [whiteoctober.github.io/bauble/example/](http://whiteoctober.github.io/bauble/example/).  More are on the way.
+There is a pretty basic example at [whiteoctober.github.io/bauble/example/](http://whiteoctober.github.io/bauble/example/).  @benjaminbenben's [presentation](https://github.com/benfoxall/ping-pong) at [#ogn34](http://oxford.geeknights.net/ogn34/). More are on the way.
